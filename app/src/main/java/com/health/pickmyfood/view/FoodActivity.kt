@@ -7,15 +7,15 @@ import androidx.lifecycle.ViewModelProviders
 import com.health.pickmyfood.viewmodel.FoodViewModel
 import com.health.pickmyfood.R
 import com.health.pickmyfood.viewmodel.ViewModelFactory
-import com.health.pickmyfood.databinding.ActivityFoodBinding
+import kotlinx.android.synthetic.main.activity_food.*
 
 class FoodActivity : AppCompatActivity() {
 
     private lateinit var viewModel: FoodViewModel
-    private lateinit var viewDataBinding: ActivityFoodBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_food)
+        setContentView( R.layout.activity_food)
         setupViewModel()
         setupUI()
     }
@@ -23,15 +23,15 @@ class FoodActivity : AppCompatActivity() {
 
     private fun setupUI() {
 
-        viewDataBinding.btnPick.setOnClickListener {
+        btn_pick.setOnClickListener {
             viewModel.pickMyPizza()
         }
 
         viewModel.myPizza.observe(this, { food ->
-            food?.let {
-                viewDataBinding.tvName.text = it.foodName
-                viewDataBinding.tvPrice.text = "Price ${it.price}"
-                viewDataBinding.tvRating.text = "Rating ${it.rating}"
+            food?.let { foodItem->
+                tv_name.text = foodItem.foodName
+                tv_price.text = "Price ${foodItem.price}"
+                tv_rating.text = "Rating ${foodItem.rating}"
             }
         })
     }
